@@ -5,11 +5,12 @@ import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 import blusunrize.immersiveengineering.common.util.loot.DropInventoryLootEntry;
-import blusunrize.immersiveengineering.common.util.loot.MBOriginalBlockLootEntry;
+import blusunrize.immersiveengineering.common.util.loot.MultiblockDropsLootContainer;
 import flaxbeard.immersivepetroleum.common.IPContent;
 import flaxbeard.immersivepetroleum.common.util.RegistryUtils;
 import flaxbeard.immersivepetroleum.common.util.loot.IPTileDropLootEntry;
 import net.minecraft.advancements.critereon.StatePropertiesPredicate;
+import net.minecraft.data.loot.LootTableSubProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
@@ -24,11 +25,11 @@ import net.minecraft.world.level.storage.loot.predicates.ExplosionCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 
-public class IPBlockLoot implements Consumer<BiConsumer<ResourceLocation, LootTable.Builder>>{
+public class IPBlockLoot implements LootTableSubProvider {
 	private BiConsumer<ResourceLocation, LootTable.Builder> out;
 	
 	@Override
-	public void accept(BiConsumer<ResourceLocation, LootTable.Builder> out){
+	public void generate(BiConsumer<ResourceLocation, LootTable.Builder> out){
 		this.out = out;
 		registerSelfDropping(IPContent.Blocks.ASPHALT.get());
 		createSlabItemTable(IPContent.Blocks.ASPHALT_SLAB.get());
@@ -41,12 +42,12 @@ public class IPBlockLoot implements Consumer<BiConsumer<ResourceLocation, LootTa
 		register(IPContent.Blocks.GAS_GENERATOR.get(), tileDrop());
 		register(IPContent.Blocks.AUTO_LUBRICATOR.get(), tileDrop());
 		
-		registerMultiblock(IPContent.Multiblock.DISTILLATIONTOWER.get());
-		registerMultiblock(IPContent.Multiblock.PUMPJACK.get());
-		registerMultiblock(IPContent.Multiblock.HYDROTREATER.get());
-		registerMultiblock(IPContent.Multiblock.COKERUNIT.get());
-		registerMultiblock(IPContent.Multiblock.DERRICK.get());
-		registerMultiblock(IPContent.Multiblock.OILTANK.get());
+		registerMultiblock(IPContent.Multiblock.DISTILLATIONTOWER.block().get());
+		registerMultiblock(IPContent.Multiblock.PUMPJACK.block().get());
+		registerMultiblock(IPContent.Multiblock.HYDROTREATER.block().get());
+		registerMultiblock(IPContent.Multiblock.COKERUNIT.block().get());
+		registerMultiblock(IPContent.Multiblock.DERRICK.block().get());
+		registerMultiblock(IPContent.Multiblock.OILTANK.block().get());
 	}
 	
 	private <S extends SlabBlock> void createSlabItemTable(S block){
@@ -62,7 +63,7 @@ public class IPBlockLoot implements Consumer<BiConsumer<ResourceLocation, LootTa
 	}
 	
 	private LootPool.Builder dropOriginalBlock(){
-		return createPoolBuilder().add(MBOriginalBlockLootEntry.builder());
+		return createPoolBuilder().add(MultiblockDropsLootContainer.builder());
 	}
 	
 	private LootPool.Builder dropInv(){

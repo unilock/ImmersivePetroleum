@@ -1,21 +1,19 @@
-package flaxbeard.immersivepetroleum.api.crafting.builders;
+package flaxbeard.immersivepetroleum.common.data.recipes.builder;
 
-import java.util.Objects;
+import java.util.*;
 
 import javax.annotation.Nonnull;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonPrimitive;
-
-import blusunrize.immersiveengineering.api.crafting.builders.IEFinishedRecipe;
-import flaxbeard.immersivepetroleum.common.crafting.Serializers;
+import blusunrize.immersiveengineering.data.recipes.builder.IERecipeBuilder;
+import flaxbeard.immersivepetroleum.api.reservoir.ReservoirType;
 import flaxbeard.immersivepetroleum.common.util.RegistryUtils;
+import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.material.Fluid;
 
-public class ReservoirBuilder extends IEFinishedRecipe<ReservoirBuilder>{
-	private String fluid;
+public class ReservoirBuilder extends IERecipeBuilder<ReservoirBuilder> {
+	private String name;
+	private ResourceLocation fluid;
 	private int fluidMinimum;
 	private int fluidMaximum;
 	private int fluidTrace;
@@ -23,36 +21,36 @@ public class ReservoirBuilder extends IEFinishedRecipe<ReservoirBuilder>{
 	private int weight;
 	
 	private boolean isDimBlacklist = false;
-	private final JsonArray dimensions = new JsonArray();
+	private final List<ResourceLocation> dimensions = new ArrayList<>();
 	
 	private boolean isBioBlacklist = false;
-	private final JsonArray biomes = new JsonArray();
+	private final List<ResourceLocation> biomes = new ArrayList<>();
 	
 	private ReservoirBuilder(){
-		super(Serializers.RESERVOIR_SERIALIZER.get());
+		super();
 		
-		addWriter(writer -> {
-			writer.addProperty("fluid", this.fluid);
-			writer.addProperty("fluidminimum", this.fluidMinimum);
-			writer.addProperty("fluidcapacity", this.fluidMaximum);
-			writer.addProperty("fluidtrace", this.fluidTrace);
-			writer.addProperty("weight", this.weight);
-			writer.addProperty("equilibrium", this.equilibrium);
-		});
-		
-		addWriter(writer -> {
-			JsonObject dimensions = new JsonObject();
-			dimensions.add("isBlacklist", new JsonPrimitive(this.isDimBlacklist));
-			dimensions.add("list", this.dimensions);
-			writer.add("dimensions", dimensions);
-		});
-		
-		addWriter(writer -> {
-			JsonObject biomes = new JsonObject();
-			biomes.add("isBlacklist", new JsonPrimitive(this.isBioBlacklist));
-			biomes.add("list", this.biomes);
-			writer.add("biomes", biomes);
-		});
+//		addWriter(writer -> {
+//			writer.addProperty("fluid", this.fluid);
+//			writer.addProperty("fluidminimum", this.fluidMinimum);
+//			writer.addProperty("fluidcapacity", this.fluidMaximum);
+//			writer.addProperty("fluidtrace", this.fluidTrace);
+//			writer.addProperty("weight", this.weight);
+//			writer.addProperty("equilibrium", this.equilibrium);
+//		});
+//		
+//		addWriter(writer -> {
+//			JsonObject dimensions = new JsonObject();
+//			dimensions.add("isBlacklist", new JsonPrimitive(this.isDimBlacklist));
+//			dimensions.add("list", this.dimensions);
+//			writer.add("dimensions", dimensions);
+//		});
+//		
+//		addWriter(writer -> {
+//			JsonObject biomes = new JsonObject();
+//			biomes.add("isBlacklist", new JsonPrimitive(this.isBioBlacklist));
+//			biomes.add("list", this.biomes);
+//			writer.add("biomes", biomes);
+//		});
 	}
 	
 	/**
@@ -62,7 +60,7 @@ public class ReservoirBuilder extends IEFinishedRecipe<ReservoirBuilder>{
 	 * @return new {@link ReservoirBuilder} instance
 	 */
 	public static ReservoirBuilder builder(String name){
-		return new ReservoirBuilder().addWriter(writer -> writer.addProperty("name", name));
+		return new ReservoirBuilder().setName(name);
 	}
 	
 	/**
@@ -81,13 +79,24 @@ public class ReservoirBuilder extends IEFinishedRecipe<ReservoirBuilder>{
 	}
 	
 	/**
+	 * Sets the name of this Reservoir.
+	 * 
+	 * @param name The name to set.
+	 * @return {@link ReservoirBuilder}
+	 */
+	public ReservoirBuilder setName(String name){
+		this.name = name;
+		return this;
+	}
+	
+	/**
 	 * Sets the fluid for this Reservoir.
 	 * 
 	 * @param fluid The fluid to set.
 	 * @return {@link ReservoirBuilder}
 	 */
 	public ReservoirBuilder setFluid(Fluid fluid){
-		this.fluid = RegistryUtils.getRegistryNameOf(fluid).toString();
+		this.fluid = RegistryUtils.getRegistryNameOf(fluid);
 		return this;
 	}
 	
@@ -176,8 +185,8 @@ public class ReservoirBuilder extends IEFinishedRecipe<ReservoirBuilder>{
 		
 		this.isDimBlacklist = isBlacklist;
 		for(ResourceLocation rl:dimensions){
-			if(rl != null && !this.dimensions.contains(new JsonPrimitive(rl.toString()))){
-				this.dimensions.add(rl.toString());
+			if(rl != null){
+				this.dimensions.add(rl);
 			}
 		}
 		
@@ -202,11 +211,22 @@ public class ReservoirBuilder extends IEFinishedRecipe<ReservoirBuilder>{
 		
 		this.isBioBlacklist = isBlacklist;
 		for(ResourceLocation rl:biomes){
-			if(rl != null && !this.biomes.contains(new JsonPrimitive(rl.toString()))){
-				this.biomes.add(rl.toString());
+			if(rl != null){
+				this.biomes.add(rl);
 			}
 		}
 		
 		return this;
+	}
+	
+	public void build(RecipeOutput out, ResourceLocation name) {
+		ReservoirType recipe = new ReservoirType(this.name, this.fluid, this.fluidMinimum, this.fluidMaximum, this.fluidTrace, this.equilibrium, this.weight);
+		if(this.dimensions.size() > 0){
+			recipe.setDimensions(this.isDimBlacklist, this.dimensions);
+		}
+		if(this.biomes.size() > 0){
+			recipe.setBiomes(this.isBioBlacklist, this.biomes);
+		}
+		out.accept(name, recipe, null, this.getConditions());
 	}
 }

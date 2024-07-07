@@ -53,19 +53,19 @@ public class IPAdvancements extends AdvancementProvider{
 			.addCriterion("code_trigger", CodeTrigger())
 			.save(consumer, ResourceUtils.ip("main/root"), exHelper);
 		
-		AdvancementHolder derrick = advancement(start, IPContent.Multiblock.DERRICK.get(), "mb_derrick", AdvancementType.GOAL, true, true, false)
+		AdvancementHolder derrick = advancement(start, IPContent.Multiblock.DERRICK.iconStack(), "mb_derrick", AdvancementType.GOAL, true, true, false)
 			.addCriterion("derrick", createMultiblockTrigger("derrick"))
 			.save(consumer, ResourceUtils.ip("main/mb_derrick"), exHelper);
 		
-		AdvancementHolder pumpjack = advancement(derrick, IPContent.Multiblock.PUMPJACK.get(), "mb_pumpjack", AdvancementType.GOAL, true, true, false)
+		AdvancementHolder pumpjack = advancement(derrick, IPContent.Multiblock.PUMPJACK.iconStack(), "mb_pumpjack", AdvancementType.GOAL, true, true, false)
 			.addCriterion("pumpjack", createMultiblockTrigger("pumpjack"))
 			.save(consumer, ResourceUtils.ip("main/mb_pumpjack"), exHelper);
 		
-		advancement(derrick, IPContent.Multiblock.OILTANK.get(), "mb_oiltank", AdvancementType.GOAL, true, true, false)
+		advancement(derrick, IPContent.Multiblock.OILTANK.iconStack(), "mb_oiltank", AdvancementType.GOAL, true, true, false)
 			.addCriterion("oiltank", createMultiblockTrigger("oiltank"))
 			.save(consumer, ResourceUtils.ip("main/mb_oiltank"), exHelper);
 		
-		AdvancementHolder tower = advancement(pumpjack, IPContent.Multiblock.DISTILLATIONTOWER.get(), "mb_distillationtower", AdvancementType.GOAL, true, true, false)
+		AdvancementHolder tower = advancement(pumpjack, IPContent.Multiblock.DISTILLATIONTOWER.iconStack(), "mb_distillationtower", AdvancementType.GOAL, true, true, false)
 			.addCriterion("distillationtower", createMultiblockTrigger("distillationtower"))
 			.save(consumer, ResourceUtils.ip("main/mb_distillationtower"), exHelper);
 		
@@ -73,7 +73,7 @@ public class IPAdvancements extends AdvancementProvider{
 			.addCriterion("bitumen", InventoryChangeTrigger.TriggerInstance.hasItems(IPContent.Items.BITUMEN.get()))
 			.save(consumer, ResourceUtils.ip("main/bitumen"), exHelper);
 		
-		AdvancementHolder cokerunit = advancement(bitumen, IPContent.Multiblock.COKERUNIT.get(), "mb_cokerunit", AdvancementType.GOAL, true, true, false)
+		AdvancementHolder cokerunit = advancement(bitumen, IPContent.Multiblock.COKERUNIT.iconStack(), "mb_cokerunit", AdvancementType.GOAL, true, true, false)
 			.addCriterion("cokerunit", createMultiblockTrigger("cokerunit"))
 			.rewards(reward(10, ResourceUtils.ip("advancements/forming_coker_reward")))
 			.save(consumer, ResourceUtils.ip("main/mb_cokerunit"), exHelper);
@@ -82,7 +82,7 @@ public class IPAdvancements extends AdvancementProvider{
 			.addCriterion("petcoke", InventoryChangeTrigger.TriggerInstance.hasItems(IPContent.Items.PETCOKE.get()))
 			.save(consumer, ResourceUtils.ip("main/petcoke"), exHelper);
 		
-		AdvancementHolder hydrotreater = advancement(tower, IPContent.Multiblock.HYDROTREATER.get(), "mb_hydrotreater", AdvancementType.GOAL, true, true, false)
+		AdvancementHolder hydrotreater = advancement(tower, IPContent.Multiblock.HYDROTREATER.iconStack(), "mb_hydrotreater", AdvancementType.GOAL, true, true, false)
 			.addCriterion("hydrotreater", createMultiblockTrigger("hydrotreater"))
 			.save(consumer, ResourceUtils.ip("main/mb_hydrotreater"), exHelper);
 		

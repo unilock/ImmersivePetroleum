@@ -16,7 +16,6 @@ import blusunrize.immersiveengineering.common.register.IEBlocks;
 import blusunrize.immersiveengineering.common.register.IEBlocks.MetalDecoration;
 import blusunrize.immersiveengineering.common.register.IEFluids;
 import blusunrize.immersiveengineering.common.register.IEItems;
-import blusunrize.immersiveengineering.data.recipebuilder.FluidAwareShapedRecipeBuilder;
 import blusunrize.immersiveengineering.data.recipes.builder.ArcFurnaceRecipeBuilder;
 import blusunrize.immersiveengineering.data.recipes.builder.BottlingMachineRecipeBuilder;
 import blusunrize.immersiveengineering.data.recipes.builder.CrusherRecipeBuilder;
@@ -24,10 +23,10 @@ import blusunrize.immersiveengineering.data.recipes.builder.MixerRecipeBuilder;
 import blusunrize.immersiveengineering.data.recipes.builder.RefineryRecipeBuilder;
 import blusunrize.immersiveengineering.data.recipes.builder.SqueezerRecipeBuilder;
 import flaxbeard.immersivepetroleum.api.IPTags;
-import flaxbeard.immersivepetroleum.api.crafting.builders.CokerUnitRecipeBuilder;
-import flaxbeard.immersivepetroleum.api.crafting.builders.DistillationTowerRecipeBuilder;
-import flaxbeard.immersivepetroleum.api.crafting.builders.HighPressureRefineryRecipeBuilder;
-import flaxbeard.immersivepetroleum.api.crafting.builders.ReservoirBuilder;
+import flaxbeard.immersivepetroleum.common.data.recipes.builder.CokerUnitRecipeBuilder;
+import flaxbeard.immersivepetroleum.common.data.recipes.builder.DistillationTowerRecipeBuilder;
+import flaxbeard.immersivepetroleum.common.data.recipes.builder.HighPressureRefineryRecipeBuilder;
+import flaxbeard.immersivepetroleum.common.data.recipes.builder.ReservoirBuilder;
 import flaxbeard.immersivepetroleum.common.IPContent;
 import flaxbeard.immersivepetroleum.common.items.GasolineBottleItem;
 import flaxbeard.immersivepetroleum.common.util.RegistryUtils;
@@ -334,7 +333,7 @@ public class IPRecipes extends RecipeProvider{
 	}
 	
 	private void blockRecipes(){
-		FluidAwareShapedRecipeBuilder.builder(IPContent.Blocks.ASPHALT.get(), 8)
+		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, IPContent.Blocks.ASPHALT.get(), 8)
 			.define('C', IPContent.Items.BITUMEN.get())
 			.define('S', Tags.Items.SAND)
 			.define('G', Tags.Items.GRAVEL)
@@ -360,8 +359,8 @@ public class IPRecipes extends RecipeProvider{
 			.unlockedBy("has_bitumen", has(IPContent.Items.BITUMEN.get()))
 			.unlockedBy("has_slag", has(IEItems.Ingredients.SLAG))
 			.save(this.out, rl("asphalt_slab"));
-		
-		FluidAwareShapedRecipeBuilder.builder(IPContent.Blocks.ASPHALT.get(), 1)
+
+		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, IPContent.Blocks.ASPHALT.get(), 1)
 			.define('S', IPContent.Blocks.ASPHALT_SLAB.get())
 			.pattern("S")
 			.pattern("S")
@@ -459,8 +458,8 @@ public class IPRecipes extends RecipeProvider{
 			.unlockedBy("has_treated_planks", has(IETags.getItemTag(IETags.treatedWood)))
 			.unlockedBy("has_"+toPath(MetalDecoration.ENGINEERING_LIGHT), has(MetalDecoration.ENGINEERING_LIGHT))
 			.save(this.out);
-		
-		FluidAwareShapedRecipeBuilder.builder(IEItems.Misc.TOOL_UPGRADES.get(ToolUpgradeItem.ToolUpgrade.DRILL_LUBE))
+
+		ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, IEItems.Misc.TOOL_UPGRADES.get(ToolUpgradeItem.ToolUpgrade.DRILL_LUBE))
 			.pattern(" i ")
 			.pattern("ioi")
 			.pattern(" ip")

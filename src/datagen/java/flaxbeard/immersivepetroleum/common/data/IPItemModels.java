@@ -157,7 +157,7 @@ public class IPItemModels extends ModelProvider<TRSRModelBuilder>{
 	}
 	
 	private void distillationtowerItem(){
-		TRSRModelBuilder model = obj(IPContent.Multiblock.DISTILLATIONTOWER.get(), "multiblock/obj/distillationtower.obj")
+		TRSRModelBuilder model = obj(IPContent.Multiblock.DISTILLATIONTOWER.blockItem().get(), "multiblock/obj/distillationtower.obj")
 			.texture("texture", modLoc("multiblock/distillation_tower"));
 		
 		ModelBuilder<?>.TransformsBuilder trans = model.transforms();
@@ -172,7 +172,7 @@ public class IPItemModels extends ModelProvider<TRSRModelBuilder>{
 	}
 	
 	private void pumpjackItem(){
-		TRSRModelBuilder model = obj(IPContent.Multiblock.PUMPJACK.get(), "item/obj/pumpjack_itemmockup.obj")
+		TRSRModelBuilder model = obj(IPContent.Multiblock.PUMPJACK.blockItem().get(), "item/obj/pumpjack_itemmockup.obj")
 			.texture("texture_base", modLoc("multiblock/pumpjack_base"))
 			.texture("texture_armature", modLoc("models/pumpjack_armature"));
 		
@@ -188,7 +188,7 @@ public class IPItemModels extends ModelProvider<TRSRModelBuilder>{
 	}
 	
 	private void cokerunitItem(){
-		TRSRModelBuilder model = obj(IPContent.Multiblock.COKERUNIT.get(), "multiblock/obj/cokerunit.obj")
+		TRSRModelBuilder model = obj(IPContent.Multiblock.COKERUNIT.blockItem().get(), "multiblock/obj/cokerunit.obj")
 				.texture("texture", modLoc("multiblock/cokerunit"));
 		
 		ModelBuilder<?>.TransformsBuilder trans = model.transforms();
@@ -203,7 +203,7 @@ public class IPItemModels extends ModelProvider<TRSRModelBuilder>{
 	}
 	
 	private void hydrotreaterItem(){
-		TRSRModelBuilder model = obj(IPContent.Multiblock.HYDROTREATER.get(), "multiblock/obj/hydrotreater.obj")
+		TRSRModelBuilder model = obj(IPContent.Multiblock.HYDROTREATER.blockItem().get(), "multiblock/obj/hydrotreater.obj")
 				.texture("texture", modLoc("multiblock/hydrotreater"));
 		
 		ModelBuilder<?>.TransformsBuilder trans = model.transforms();
@@ -218,7 +218,7 @@ public class IPItemModels extends ModelProvider<TRSRModelBuilder>{
 	}
 	
 	private void derrickItem(){
-		TRSRModelBuilder model = obj(IPContent.Multiblock.DERRICK.get(), "multiblock/obj/derrick.obj")
+		TRSRModelBuilder model = obj(IPContent.Multiblock.DERRICK.blockItem().get(), "multiblock/obj/derrick.obj")
 				.texture("texture", modLoc("multiblock/derrick"));
 		
 		ModelBuilder<?>.TransformsBuilder trans = model.transforms();
@@ -233,7 +233,7 @@ public class IPItemModels extends ModelProvider<TRSRModelBuilder>{
 	}
 	
 	private void oiltankItem(){
-		TRSRModelBuilder model = obj(IPContent.Multiblock.OILTANK.get(), "multiblock/obj/oiltank.obj")
+		TRSRModelBuilder model = obj(IPContent.Multiblock.OILTANK.blockItem().get(), "multiblock/obj/oiltank.obj")
 				.texture("texture", modLoc("multiblock/oiltank"));
 		
 		ModelBuilder<?>.TransformsBuilder trans = model.transforms();
